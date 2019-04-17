@@ -134,10 +134,30 @@ for n in range(1000) :
     w66 -= lr / np.sqrt(adw66) * w66g
     b -= lr / np.sqrt(adb) * bg
 
+res=[]
+for i in rangeOfDataKey : 
+    res.append(w1 * pm25[i]**2 + \
+            w11 * pm25[i] + \
+            w2 * pm25[i + 1]**2 + \
+            w22 * pm25[i + 1] + \
+            w3 * pm25[i + 2]**2 + \
+            w33 * pm25[i + 2] + \
+            w4 * pm25[i + 3]**2 + \
+            w44 * pm25[i + 3] + \
+            w5 * pm25[i + 4]**2 + \
+            w55 * pm25[i + 4] + \
+            w6 * pm25[i + 5]**2 + \
+            w66 * pm25[i + 5] + \
+            b)
+
 #print(w1, w2, w3, w4, w5, w6, b)
-exit
+#exit
 x = range(len(loss_h))
-plt.plot(x, loss_h, label='loss')
+#plt.plot(x, loss_h, label='loss')
+#plt.plot(range(len(res)), res)
+plt.plot(range(200), res[0:200], label='res')
+plt.plot(range(200), pm25[0:200], label='PM2.5')
+#
 #plt.plot(x, pm25[0:200], label='PM2.5')
 #plt.plot(x, pm10[0:200], label='PM10')
 #plt.plot(x, rain[0:200], label='Rain')

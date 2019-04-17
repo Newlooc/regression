@@ -38,40 +38,34 @@ loss = 0
 loss_h = []
 lr = 1
 
-for n in range(1000) :
+for n in range(100) :
     #loss function中的求和
     for i in rangeOfDataKey :
         #求梯度
+        part1 = 2 * (pm25[i + 6] - (w1 * pm25[i] + w2 * pm25[i + 1] + w3 * pm25[i + 2] + w4 * pm25[i + 3] + w5 * pm25[i + 4] + w6 * pm25[i + 5] + b))
         #w1
-        w1gpart1 = 2 * (pm25[i + 6] - (w1 * pm25[i] + w2 * pm25[i + 1] + w3 * pm25[i + 2] + w4 * pm25[i + 3] + w5 * pm25[i + 4] + w6 * pm25[i + 5] + b))
         w1gpart2 = -1 * pm25[i]
-        w1g += w1gpart1 * w1gpart2
+        w1g += part1 * w1gpart2
         #w2
-        w2gpart1 = 2 * (pm25[i + 6] - (w1 * pm25[i] + w2 * pm25[i + 1] + w3 * pm25[i + 2] + w4 * pm25[i + 3] + w5 * pm25[i + 4] + w6 * pm25[i + 5] + b))
         w2gpart2 = -1 * pm25[i+1]
-        w2g += w2gpart1 * w2gpart2
+        w2g += part1 * w2gpart2
         #w3
-        w3gpart1 = 2 * (pm25[i + 6] - (w1 * pm25[i] + w2 * pm25[i + 1] + w3 * pm25[i + 2] + w4 * pm25[i + 3] + w5 * pm25[i + 4] + w6 * pm25[i + 5] + b))
         w3gpart2 = -1 * pm25[i+2]
-        w3g += w3gpart1 * w3gpart2
+        w3g += part1 * w3gpart2
         #w4
-        w4gpart1 = 2 * (pm25[i + 6] - (w1 * pm25[i] + w2 * pm25[i + 1] + w3 * pm25[i + 2] + w4 * pm25[i + 3] + w5 * pm25[i + 4] + w6 * pm25[i + 5] + b))
         w4gpart2 = -1 * pm25[i+3]
-        w4g += w4gpart1 * w4gpart2
+        w4g += part1 * w4gpart2
         #w5
-        w5gpart1 = 2 * (pm25[i + 6] - (w1 * pm25[i] + w2 * pm25[i + 1] + w3 * pm25[i + 2] + w4 * pm25[i + 3] + w5 * pm25[i + 4] + w6 * pm25[i + 5] + b))
         w5gpart2 = -1 * pm25[i+4]
-        w5g += w5gpart1 * w5gpart2
+        w5g += part1 * w5gpart2
         #w6
-        w6gpart1 = 2 * (pm25[i + 6] - (w1 * pm25[i] + w2 * pm25[i + 1] + w3 * pm25[i + 2] + w4 * pm25[i + 3] + w5 * pm25[i + 4] + w6 * pm25[i + 5] + b))
         w6gpart2 = -1 * pm25[i+5]
-        w6g += w6gpart1 * w6gpart2
+        w6g += part1 * w6gpart2
         #b
-        bgpart1 = 2 * (pm25[i + 6] - (w1 * pm25[i] + w2 * pm25[i + 1] + w3 * pm25[i + 2] + w4 * pm25[i + 3] + w5 * pm25[i + 4] + w6 * pm25[i + 5] + b))
         bgpart2 = -1
-        bg += bgpart1 * bgpart2
+        bg += part1 * bgpart2
         
-        loss += (pm25[i + 6] - (w1 * pm25[i] + w2 * pm25[i + 1] + w3 * pm25[i + 2] + w4 * pm25[i + 3] + w5 * pm25[i + 4] + w6 * pm25[i + 5] + b))**2
+        loss += (part1 / 2)**2
 
     loss_h.append(loss)
     loss = 0
@@ -93,10 +87,18 @@ for n in range(1000) :
     b -= lr / np.sqrt(adb) * bg
 
 print(w1, w2, w3, w4, w5, w6, b)
-exit
+#exit
+
+
+res=[]
+for i in rangeOfDataKey : 
+    res.append(w1 * pm25[i] + w2 * pm25[i + 1] + w3 * pm25[i + 2] + w4 * pm25[i + 3] + w5 * pm25[i + 4] + w6 * pm25[i + 5] + b)
+
+
 x = range(len(loss_h))
-plt.plot(x, loss_h, label='loss')
-#plt.plot(x, pm25[0:200], label='PM2.5')
+#plt.plot(x, loss_h, label='loss')
+plt.plot(range(200), res[0:200], label='res')
+plt.plot(range(200), pm25[0:200], label='PM2.5')
 #plt.plot(x, pm10[0:200], label='PM10')
 #plt.plot(x, rain[0:200], label='Rain')
 #plt.plot(x, so2[0:200], label='SO2')
