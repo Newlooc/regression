@@ -32,10 +32,6 @@ rangeOfDataKey = range(len(pm25) - 6)
 w1 = w2 = w3 = w4 = w5 = w6 = b =1
 w11 = w22 = w33 = w44 = w55 = w66 = b =1
 part1 = 0
-w1gpart2 = w2gpart2 = w3gpart2 = w4gpart2 = w5gpart2 = w6gpart2 = bgpart2 = 0
-w11gpart2 = w22gpart2 = w33gpart2 = w44gpart2 = w55gpart2 = w66gpart2 = bgpart2 = 0
-w1g = w2g = w3g = w4g = w5g = w6g = bg = 0
-w11g = w22g = w33g = w44g = w55g = w66g = bg = 0
 adw1 = adw2 = adw3 = adw4 = adw5 = adw6 = adb = 0
 adw11 = adw22 = adw33 = adw44 = adw55 = adw66 = adb = 0
 loss = 0
@@ -43,6 +39,10 @@ loss_h = []
 lr = 1
 
 for n in range(1000) :
+    w1gpart2 = w2gpart2 = w3gpart2 = w4gpart2 = w5gpart2 = w6gpart2 = bgpart2 = 0
+    w11gpart2 = w22gpart2 = w33gpart2 = w44gpart2 = w55gpart2 = w66gpart2 = bgpart2 = 0
+    w1g = w2g = w3g = w4g = w5g = w6g = bg = 0
+    w11g = w22g = w33g = w44g = w55g = w66g = bg = 0
     #loss function中的求和
     for i in rangeOfDataKey :
         #求梯度
