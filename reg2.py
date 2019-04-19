@@ -38,11 +38,11 @@ loss = 0
 loss_h = []
 lr = 1
 
-for n in range(1000) :
+for n in range(2000) :
     w1gpart2 = w2gpart2 = w3gpart2 = w4gpart2 = w5gpart2 = w6gpart2 = bgpart2 = 0
-    w11gpart2 = w22gpart2 = w33gpart2 = w44gpart2 = w55gpart2 = w66gpart2 = bgpart2 = 0
+    w11gpart2 = w22gpart2 = w33gpart2 = w44gpart2 = w55gpart2 = w66gpart2 = 0
     w1g = w2g = w3g = w4g = w5g = w6g = bg = 0
-    w11g = w22g = w33g = w44g = w55g = w66g = bg = 0
+    w11g = w22g = w33g = w44g = w55g = w66g = 0
     #loss function中的求和
     for i in rangeOfDataKey :
         #求梯度
@@ -134,9 +134,11 @@ for n in range(1000) :
     w66 -= lr / np.sqrt(adw66) * w66g
     b -= lr / np.sqrt(adb) * bg
 
-res=[]
+model = 0
+model_h = [pm25[i], pm25[i + 1], pm25[i + 2], pm25[i + 3], pm25[i + 4], pm25[i + 5]]
+variance = 0
 for i in rangeOfDataKey : 
-    res.append(w1 * pm25[i]**2 + \
+    model = w1 * pm25[i]**2 + \
             w11 * pm25[i] + \
             w2 * pm25[i + 1]**2 + \
             w22 * pm25[i + 1] + \
@@ -148,14 +150,18 @@ for i in rangeOfDataKey :
             w55 * pm25[i + 4] + \
             w6 * pm25[i + 5]**2 + \
             w66 * pm25[i + 5] + \
-            b)
+            b
+    model_h.append(model)
+    variance += (model - pm25[i + 6])**2
+
+print(np.sqrt(variance / len(model_h)))
 
 #print(w1, w2, w3, w4, w5, w6, b)
 #exit
 x = range(len(loss_h))
 #plt.plot(x, loss_h, label='loss')
 #plt.plot(range(len(res)), res)
-plt.plot(range(200), res[0:200], label='res')
+plt.plot(range(200), model_h[0:200], label='res')
 plt.plot(range(200), pm25[0:200], label='PM2.5')
 #
 #plt.plot(x, pm25[0:200], label='PM2.5')

@@ -91,9 +91,15 @@ print(w1, w2, w3, w4, w5, w6, b)
 
 
 res=[]
+model_h = []
+variance = 0
 for i in rangeOfDataKey : 
-    res.append(w1 * pm25[i] + w2 * pm25[i + 1] + w3 * pm25[i + 2] + w4 * pm25[i + 3] + w5 * pm25[i + 4] + w6 * pm25[i + 5] + b)
+    model = w1 * pm25[i] + w2 * pm25[i + 1] + w3 * pm25[i + 2] + w4 * pm25[i + 3] + w5 * pm25[i + 4] + w6 * pm25[i + 5] + b
+    model_h.append(model)
 
+    variance += (model - pm25[i + 6])**2
+
+print(np.sqrt(variance / len(model_h)))
 
 #x = range(len(loss_h))
 plt.plot(range(len(loss_h)), loss_h, label='loss')

@@ -42,7 +42,7 @@ loss = 0
 loss_h = []
 lr = 1
 
-for n in range(1000) :
+for n in range(100) :
     #导数第二部分
     w1gpart2 = w2gpart2 = w3gpart2 = w4gpart2 = w5gpart2 = w6gpart2 = bgpart2 = 0
     ws1gpart2 = ws2gpart2 = ws3gpart2 = ws4gpart2 = ws5gpart2 = ws6gpart2 = 0
@@ -147,7 +147,8 @@ print(ws1, ws2, ws3, ws4, ws5, ws6, b)
 res=[]
 variance = 0
 model = 0
-model_h = [0, 0, 0, 0, 0]
+model_h = [pm25[0], pm25[1], pm25[2], pm25[3], pm25[4], pm25[5]]
+i=0
 for i in rangeOfDataKey : 
     model = \
         w1 * pm25[i] + \
@@ -164,8 +165,12 @@ for i in rangeOfDataKey :
         ws6 * pm10[i + 5] + \
         b
     model_h.append(model)
-    variance += (model - pm25[i + 1])**2
+    variance += (model - pm25[i + 6])**2
 
+variance_mean = variance / len(model_h)
+
+print(np.sqrt(variance_mean))
+print(model_h[1], pm25[1])
 #x = range(len(loss_h))
 #plt.plot(range(len(loss_h)), loss_h, label='loss')
 plt.plot(range(len(model_h)), model_h, label='res')
